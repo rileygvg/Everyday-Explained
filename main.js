@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function() {
 import { QUESTIONS, CATEGORIES } from "./data.js";
 
 const room = new WebsimSocket();
