@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Everyday Explained</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script>
+    // Prevent flash of light mode on dark mode users
+    if (localStorage.getItem("everyday-theme") === "dark") {
+      document.documentElement.classList.add("dark-mode-initial");
+    }
+  </script>
+</head>
+<body>
+  <!-- Main Menu / Welcome Screen -->
+  <div id="welcome-screen" class="screen welcome-screen">
+    <div class="welcome-content">
+      <div class="brand-huge">
+        <span class="brand-title-everyday">everyday</span>
+        <span class="brand-title-explained">EXPLAINED</span>
+      </div>
+      <div class="intro-text">
+        <div style="text-align: center;">
+          <p style="font-weight: 700; color: var(--accent); margin-bottom: 2rem; border: 2px solid var(--accent); padding: 10px; border-radius: 12px; display: inline-block;">This project is made by Riley S!</p>
+        </div>
+        <p>Welcome to Everyday Explained, your curated guide to the mysteries hiding in plain sight. From the curious origins of court wigs to the physics of falling toast, we dive deep into the small details that shape our world.</p>
+        <p>Across our ever-growing collection, we explore history, science, design, human habit and much more. Each story bridges the gap between a simple "why?" and the fascinating complexity of the answer.</p>
+        <p>Designed to satisfy the relentlessly curious, this collection turns the background noise of life into a symphony of understanding. No stone is left unturned, no oddity remains unexamined.</p>
+        <p>Prepared to see the world differently? Your journey through the everyday begins here. Welcome to Everyday Explained, let's break it down.</p>
+      </div>
+      <button id="start-btn" class="primary-btn">Start Exploring</button>
+    </div>
+  </div>
+
+  <!-- Main Application Content -->
+  <div id="app-container" class="app hidden">
+    <header class="app-header">
+      <div class="header-main">
+        <div class="brand">
+          <span class="brand-title">
+            <span class="brand-title-everyday">everyday</span>
+            <span class="brand-title-explained">EXPLAINED</span>
+          </span>
+          <span class="brand-tagline">212 curious questions, comprehensively answered.</span>
+        </div>
+        <div class="header-actions">
+          <button id="theme-toggle" class="ui-toggle-btn" title="Toggle Dark/Light Mode">
+            <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="18.36" x2="5.64" y2="16.92"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="moon-icon hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button id="font-toggle" class="ui-toggle-btn" title="Switch Font">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"></path></svg>
+            <span id="current-font-name">Montserrat</span>
+          </button>
+          <div id="user-badge-container" class="user-badge-pill">
+            <span id="user-badge-rank">Trainee Writer</span>
+            <select id="owner-rank-tester" class="hidden rank-tester-select">
+              <option value="0">Test: Trainee</option>
+              <option value="1">Test: Grade 1</option>
+              <option value="2">Test: Grade 2</option>
+              <option value="3">Test: Grade 3</option>
+              <option value="4">Owner Mode</option>
+            </select>
+          </div>
+          <button id="admin-panel-btn" class="ui-toggle-btn creator-only hidden" title="Admin Control">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+          </button>
+          <button id="private-chat-btn" class="ui-toggle-btn hidden" title="Writers' Lounge">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14 8.38 8.38 0 0 1 3.8.9L21 3z"></path></svg>
+          </button>
+          <button id="owner-direct-chat-btn" class="ui-toggle-btn hidden" title="Chat with Riley">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span class="desktop-only">Riley Chat</span>
+          </button>
+          <button id="ai-maker-btn" class="ui-toggle-btn" title="AI Article Maker">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.5 1.5"></path><path d="M7 11l5-5"></path></svg>
+            <span class="desktop-only">AI Gen</span>
+          </button>
+          <button id="ai-recs-btn" class="ui-toggle-btn" title="AI Recommendations">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+            <span class="desktop-only">Find for Me</span>
+          </button>
+          <button id="mobile-ui-toggle" class="ui-toggle-btn" title="Toggle Mobile UI">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="global-announcement" class="announcement-banner hidden"></div>
+    <div class="app-controls desktop-controls">
+      <div class="controls-top">
+        <div class="search-wrapper">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="search-input" placeholder="Search titles, stories, or facts..." />
+        </div>
+        <div class="mode-toggle-wrapper">
+          <span class="mode-label">Mode:</span>
+          <div class="mode-toggle">
+            <button id="mode-detailed" class="active">Detailed</button>
+            <button id="mode-grouped">Grouped</button>
+          </div>
+        </div>
+      </div>
+      <div class="categories-wrapper">
+        <div class="nav-tabs">
+          <button id="tab-library" class="tab-btn active">Library</button>
+          <div class="tab-dropdown-wrapper">
+            <button id="tab-community" class="tab-btn">Community</button>
+            <div id="community-sub-tabs" class="sub-tabs hidden">
+              <button id="sub-tab-articles" class="sub-tab-btn active">Articles</button>
+              <button id="sub-tab-series" class="sub-tab-btn">Series</button>
+            </div>
+          </div>
+          <button id="tab-drafts" class="tab-btn">My Drafts</button>
+          <button id="tab-create" class="tab-btn">Write Article</button>
+        </div>
+        <div id="category-filters" class="category-pills">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <main class="content">
+      <div id="mobile-search-bar" class="mobile-search-wrapper hidden">
+        <input type="text" id="mobile-search-input" placeholder="Search questions..." />
+      </div>
+      <section id="questions" class="questions-grid"></section>
+      <div id="no-results" class="no-results hidden">
+        <p>No articles found matching your search. Try another topic!</p>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav id="mobile-nav" class="mobile-nav hidden">
+      <button class="nav-item active" data-view="home">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" data-view="recs">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        <span>Find</span>
+      </button>
+      <button class="nav-item" data-view="community">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>Community</span>
+      </button>
+      <button class="nav-item" data-view="drafts">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Drafts</span>
+      </button>
+      <button class="nav-item" data-view="write">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+        <span>Write</span>
+      </button>
+      <button class="nav-item" data-view="search">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>Search</span>
+      </button>
+      <button class="nav-item" data-view="filters">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+        <span>Topics</span>
+      </button>
+    </nav>
+
+    <!-- Admin Settings Overlay -->
+    <div id="admin-overlay" class="article-overlay hidden" aria-modal="true" role="dialog">
+      <div class="article-container">
+        <button id="admin-close" class="article-close-circle">&times;</button>
+        <div class="article-scroll-area">
+          <header class="article-full-header">
+            <span class="section-label">System Control</span>
+            <h1 class="article-full-title">Admin Dashboard</h1>
+          </header>
+          <div class="admin-grid">
+            <div class="admin-section">
+              <h3>Global Announcement</h3>
+              <textarea id="admin-announcement-input" placeholder="Broadcast a message to all users..."></textarea>
+              <div style="display: flex; gap: 8px;">
+                <button id="admin-post-announcement" class="primary-btn" style="flex: 1;">Post</button>
+                <button id="admin-stop-announcement" class="secondary-btn" style="flex: 1;">Stop Current</button>
+              </div>
+            </div>
+            <div class="admin-settings-list">
+              <h3>System Settings</h3>
+              <div id="admin-toggles-container">
+                <!-- 8 Settings will be here -->
+              </div>
+            </div>
+            <div class="admin-review-queue">
+              <h3>Review Queue</h3>
+              <div id="admin-review-list"></div>
+            </div>
+            <div class="admin-user-directory">
+              <h3>User Directory & Grades</h3>
+              <div id="admin-user-list" class="admin-user-list"></div>
+            </div>
+            <div class="admin-section">
+              <h3>Award Badge</h3>
+              <div class="community-form" style="background: none; padding: 0;">
+                <div class="input-group">
+                  <input type="text" id="award-username" placeholder="Type Username...">
+                </div>
+                <div class="input-group">
+                  <select id="award-grade">
+                    <option value="1">Grade 1 (Unlimited articles)</option>
+                    <option value="2">Grade 2 (Writers' Lounge)</option>
+                    <option value="3">Grade 3 (AI Maker & Riley Chat)</option>
+                  </select>
+                </div>
+                <button id="award-submit-btn" class="primary-btn" style="width: 100%; padding: 12px;">Grant Grade</button>
+              </div>
+            </div>
+            <div class="admin-section" style="grid-column: span 2;">
+              <h3>Message Inbox (Recent DMs)</h3>
+              <div id="admin-inbox-list" class="admin-user-list">
+                <!-- Populated with users who messaged Riley -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Create Overlay -->
+    <div id="community-create-overlay" class="article-overlay hidden">
+      <div class="article-container">
+        <button id="community-create-close" class="article-close-circle">&times;</button>
+        <div class="article-scroll-area">
+          <header class="article-full-header">
+            <span class="section-label">Contribute</span>
+            <h1 class="article-full-title">New Community Article</h1>
+          </header>
+          <div class="community-form">
+            <div class="input-group">
+              <label>Question Title</label>
+              <input type="text" id="comm-title" placeholder="e.g., Why do we have pinky toes?">
+            </div>
+            <div class="input-group">
+              <label>Category</label>
+              <select id="comm-category"></select>
+            </div>
+            <div class="input-group">
+              <label>Wondering about it...</label>
+              <textarea id="comm-wonder" placeholder="The curiosity/intro (approx 50 words)"></textarea>
+            </div>
+            <div class="input-group">
+              <label>From the beginning to the end</label>
+              <textarea id="comm-story" placeholder="The full narrative (detailed)"></textarea>
+            </div>
+            <div class="input-group">
+              <label>The short answer</label>
+              <input type="text" id="comm-summary" placeholder="One clear sentence gist">
+            </div>
+            <div class="input-group">
+              <label>Interesting side notes (one per line)</label>
+              <textarea id="comm-details" placeholder="Fact 1&#10;Fact 2&#10;Fact 3..."></textarea>
+            </div>
+            <button id="comm-submit-btn" class="primary-btn">Save to Drafts / Review</button>
+            <p class="form-hint"><strong>Community Access:</strong> Writing is now open to all! Your work is saved to your "My Drafts" tab. To publish to the public Community tab, <strong>rileygvg</strong> must provide consent after review.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Direct Owner Chat Overlay -->
+    <div id="owner-chat-overlay" class="article-overlay hidden">
+      <div class="article-container">
+        <button id="owner-chat-close" class="article-close-circle">&times;</button>
+        <div class="article-scroll-area">
+           <header class="article-full-header">
+            <span class="section-label">Direct Communication</span>
+            <h1 id="owner-chat-title" class="article-full-title">Chat with Riley</h1>
+          </header>
+          <div class="chat-full-view">
+             <div id="owner-chat-messages" class="chat-messages"></div>
+             <div class="chat-input-area">
+                <input type="text" id="owner-chat-input" placeholder="Message Riley directly...">
+                <button id="owner-chat-send" class="primary-btn">Send</button>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Private Chat Overlay -->
+    <div id="private-chat-overlay" class="article-overlay hidden">
+      <div class="article-container">
+        <button id="private-chat-close" class="article-close-circle">&times;</button>
+        <div class="article-scroll-area">
+           <header class="article-full-header">
+            <span class="section-label">Exclusive Access</span>
+            <h1 class="article-full-title">Writers' Lounge</h1>
+          </header>
+          <div class="chat-full-view">
+             <div id="private-chat-messages" class="chat-messages"></div>
+             <div class="chat-input-area">
+                <input type="text" id="private-chat-input" placeholder="Message the collective...">
+                <button id="private-chat-send" class="primary-btn">Send</button>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Filter Drawer -->
+    <div id="filter-drawer" class="filter-drawer hidden">
+      <div class="drawer-handle"></div>
+      <div class="drawer-content">
+        <div class="drawer-header-row">
+          <h3>Topics</h3>
+          <div class="mobile-mode-toggle">
+            <button id="mobile-mode-detailed" class="active">Detailed</button>
+            <button id="mobile-mode-grouped">Grouped</button>
+          </div>
+        </div>
+        <div id="mobile-category-list" class="mobile-category-list">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+    <div id="drawer-backdrop" class="drawer-backdrop hidden"></div>
+  </div>
+
+  <!-- AI Recommendations Overlay -->
+  <div id="recs-overlay" class="article-overlay hidden" aria-modal="true" role="dialog">
+    <div class="article-container">
+      <button id="recs-close" class="article-close-circle">&times;</button>
+      <div class="article-scroll-area">
+        <header class="article-full-header">
+          <span class="section-label">Smart Search</span>
+          <h1 class="article-full-title">AI Recommendations</h1>
+          <p style="margin-top: 1rem; color: var(--text-muted);">Tell us what you're interested in, and our AI will hand-pick 4 articles that match your curiosity.</p>
+        </header>
+
+        <div class="maker-form">
+          <div class="input-group">
+            <label>What are you interested in today?</label>
+            <textarea id="recs-input" placeholder="e.g., I love space and mystery, or I'm curious about food history..."></textarea>
+          </div>
+          
+          <div style="display: flex; gap: 20px; align-items: flex-end;">
+            <div class="input-group" style="flex: 1; margin-bottom: 0;">
+              <label>Search Source</label>
+              <div class="mode-toggle" style="width: fit-content;">
+                <button id="recs-source-library" class="active">Library</button>
+                <button id="recs-source-community">Community</button>
+              </div>
+            </div>
+            
+            <div class="input-group" style="width: 140px; margin-bottom: 0;">
+              <label>Recs Count (1-10)</label>
+              <input type="number" id="recs-count" min="1" max="10" value="4" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--border-soft); background: var(--pill-bg); color: var(--text-main);">
+            </div>
+          </div>
+
+          <button id="recs-generate-btn" class="primary-btn" style="width: 100%;">Get Recommendations</button>
+        </div>
+
+        <div id="recs-loading" class="maker-status hidden">
+          <div class="spinner"></div>
+          <p>Scanning the collection for your perfect matches...</p>
+        </div>
+
+        <div id="recs-results" class="questions-grid" style="margin-top: 40px;">
+          <!-- Results populated here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Maker Overlay -->
+  <div id="maker-overlay" class="article-overlay hidden" aria-modal="true" role="dialog">
+    <div class="article-container">
+      <button id="maker-close" class="article-close-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="article-scroll-area">
+        <header class="article-full-header">
+          <span class="section-label">Creator Mode</span>
+          <h1 class="article-full-title">Generate New Article</h1>
+          <p style="margin-top: 1rem; color: var(--text-muted);">Enter a curious topic or question, and Everyday AI will research and write a comprehensive article for the collection.</p>
+          <div style="background: var(--accent-light); padding: 12px; border-radius: 8px; border: 1px solid var(--accent); margin-top: 10px; font-size: 0.85rem;">
+            <strong>Note:</strong> AI generation is now open to <strong>everyone</strong>! Generated articles are saved as private drafts. To make them public in the Library or Community tabs, they must be reviewed and approved by <strong>rileygvg</strong>.
+          </div>
+        </header>
+        
+        <div class="maker-form">
+          <div class="maker-mode-tabs" style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border-soft); padding-bottom: 10px;">
+            <button id="maker-mode-single" class="tab-btn active">Single Article</button>
+            <button id="maker-mode-series" class="tab-btn">Series (New!)</button>
+          </div>
+
+          <div class="input-group">
+            <label for="maker-input" id="maker-prompt-label">Topic or Question</label>
+            <textarea id="maker-input" placeholder="e.g., Why is the sky blue? or The history of blue jeans..."></textarea>
+          </div>
+
+          <div id="maker-series-controls" class="hidden" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; background: var(--accent-light); padding: 15px; border-radius: 12px;">
+            <div class="input-group" style="margin-bottom: 0;">
+              <label>No. of Articles (1-14)</label>
+              <input type="number" id="maker-series-count" min="1" max="14" value="3" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-soft);">
+            </div>
+            <div class="input-group" style="margin-bottom: 0;">
+              <label>Total Words (1-1500)</label>
+              <input type="number" id="maker-series-words" min="50" max="1500" value="600" style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-soft);">
+            </div>
+          </div>
+
+          <button id="maker-generate-btn" class="primary-btn" style="width: 100%;">Generate with AI</button>
+        </div>
+
+        <div id="maker-loading" class="maker-status hidden">
+          <div class="spinner"></div>
+          <p>Consulting the archives and drafting the narrative...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Screen Article Overlay -->
+  <div id="article-overlay" class="article-overlay hidden" aria-modal="true" role="dialog">
+    <!-- AI Chat Widget (Moved outside container for far-right positioning) -->
+    <div id="article-chat-widget" class="article-chat-widget">
+      <button id="chat-toggle-btn" class="chat-toggle-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Extra questions?</span>
+      </button>
+      
+      <div id="chat-window" class="chat-window hidden">
+        <div class="chat-header">
+          <h3>Everyday AI</h3>
+          <button id="chat-close-x" class="chat-close-x">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+          <div class="message ai-message">Hi! I'm your Everyday Explained guide. Got more questions about this topic? Ask away!</div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chat-input" placeholder="Type a question..." />
+          <button id="chat-send-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-container">
+      <button id="article-close" class="article-close-circle" aria-label="Close article">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      
+      <div class="article-scroll-area">
+        <header class="article-full-header">
+          <div class="article-full-meta">
+            <span id="article-label" class="badge-number"></span>
+            <span id="article-topic" class="badge-topic"></span>
+          </div>
+          <h1 id="article-title" class="article-full-title"></h1>
+        </header>
+
+        <div id="article-body" class="article-full-body">
+          <!-- Dynamically populated sections -->
+        </div>
+
+        <section class="comments-section">
+          <span class="section-label">Discussion</span>
+          <div id="comments-list"></div>
+          <div class="comment-input-row">
+            <textarea id="comment-text" placeholder="Share your thoughts..."></textarea>
+            <button id="comment-submit" class="primary-btn">Post</button>
+          </div>
+        </section>
+        
+        <footer class="article-footer">
+          <button id="article-close-bottom" class="secondary-btn">Back to Questions</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
